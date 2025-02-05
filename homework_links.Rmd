@@ -9,5 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Week 1 Homework [HW1 Link](Hw1.html)
-#![my picture](path/to/file)
+Week 3 Homework [HW3 Link](Homework_3.html)
+
+
+
+#![my picture](D:\Documents\UVM Classes\computational_bio\homework_3_1_29)
