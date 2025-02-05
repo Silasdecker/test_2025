@@ -173,9 +173,9 @@ which(queue=='aphid')
 > which(queue=='aphid')
 [1] 3 
 
-```
+
 #Problem 5
-```{r}
+
 
 
 
