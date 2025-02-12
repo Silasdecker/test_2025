@@ -2,7 +2,9 @@
 title: "Homework_4"
 author: "Silas Decker"
 date: "2025-02-05"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}

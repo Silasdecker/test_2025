@@ -1,0 +1,126 @@
+---
+title: "Homework_5"
+author: "Silas Decker"
+date: "2025-02-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+## **Problem 1**
+
+```{r}
+#create vector of consecutive int 1:ndims^2
+n_dims<-sample(3:10,1,replace=TRUE)
+print(n_dims)
+n_dims2<-n_dims^2
+print(n_dims2)
+n_dims_vec<-seq(1:n_dims2)
+print(n_dims_vec)
+#sampling 
+sample(x=n_dims_vec)
+#creating square matrix
+m<- matrix(data=n_dims_vec,nrow=sqrt(n_dims2))
+print(m)
+
+#transposing the matrix via t() function 
+m_transposed<-t(m)
+print(m_transposed)
+#sum of elements in first row
+row1_sum<-sum(m_transposed[1,])
+print(row1_sum)
+#sum of elements in last row 
+row4_sum<-sum(m_transposed[4,])
+print(row4_sum)
+
+#exploring eigen
+eigen_m_transposed<-eigen(m_transposed, symmetric=FALSE,only.values=FALSE)
+print(eigen_m_transposed)
+print(eigen_m_transposed$values)
+print(eigen_m_transposed$vector)
+#these are all real numbers, some negative some positive 
+#all are less than 1
+typeof(eigen_m_transposed$values)
+typeof(eigen_m_transposed$vectors)
+
+
+```
+
+## **Problem 2**
+
+```{r}
+#creating random 4x4 matrix 
+ran_nums<-runif(16)
+print(ran_nums)
+
+my_matrix<-matrix(data=ran_nums,nrow=4)
+print(my_matrix)
+
+#setting up logical vector 
+my_vec<-runif(100)
+print(my_vec)
+
+my_logical<-(my_vec <0.5)
+print(my_logical)
+
+#setting up my letters
+my_alph<-letters
+print(my_alph)
+my_letters<-sample(x=my_alph)
+print(my_letters)
+
+#new list 
+new_list<-list(my_matrix[2,2],my_logical[2],my_letters[2])
+print(new_list)
+
+#exploring structure 
+
+typeof(new_list)
+
+#creating atomic vector 
+new_vec<-c(my_matrix[2,2],my_logical[2],my_letters[2])
+print(new_vec)
+
+typeof(new_vec)
+
+```
+## **Problem 3**
+
+```{r}
+#creating data frame 
+
+my_unis<-runif(26,min=0,max=10)
+my_letters<-sample(LETTERS)
+print(my_letters)
+
+d_frame<-data.frame(my_unis,my_letters)
+print(d_frame)
+
+#Filling random entries with 'NA'
+
+d_frame[sample(1:26, size=4, replace=FALSE),1]<-NA
+print(d_frame)
+
+#looking for missing value 
+which(!complete.cases(d_frame))
+
+#rearranging data frame to be in alphabetical order 
+
+df_ordered<-d_frame[order(d_frame$my_letters),]
+print(df_ordered)
+
+#calculating column mean of first variable
+#first make data frame without NA 
+d_frame2<-d_frame[which(complete.cases(d_frame)),]
+
+print(d_frame2)
+
+col_mean<-mean(d_frame2$my_unis)
+print(col_mean)
+
+
+```
