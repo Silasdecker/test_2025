@@ -3,8 +3,8 @@ title: "Homework_4"
 author: "Silas Decker"
 date: "2025-02-05"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -82,7 +82,7 @@ print(theta)
 polar<-c(r,theta)
 print(polar)
 
-ouput: 
+#ouput: 
 #> z<-runif(2)
 #> print(z)
 #[1] 0.5475164 0.3287697

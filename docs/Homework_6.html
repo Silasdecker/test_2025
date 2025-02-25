@@ -447,12 +447,12 @@ colMeans(data[,-1], na.rm=TRUE, dims=1)</code></pre>
 ##       5.891013      11.711281       9.762906</code></pre>
 <pre class="r"><code>#converting to long data 
 library(tidyverse)</code></pre>
-<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+<pre><code>## ── Attaching core tidyverse packages ─────────────────
 ## ✔ dplyr     1.1.4     ✔ purrr     1.0.2
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
 ## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
 ## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ── Conflicts ──────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
@@ -736,6 +736,16 @@ data_long &lt;- data_long %&gt;%
   mutate(Taxa_Abbrev = str_extract(X.OTU.ID, &quot;(?&lt;=;)[^;]+$&quot;))
 
 #This seems to work okay, but is not good for those that dont have this level of specification </code></pre>
+<pre class="r"><code>head(data_long)</code></pre>
+<pre><code>## # A tibble: 6 × 5
+##   X.OTU.ID                           Sample_ID Abundance Sample_Type Taxa_Abbrev
+##   &lt;chr&gt;                              &lt;chr&gt;         &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;      
+## 1 d__Bacteria;p__Campilobacterota;c… X2280.04…        86 AD01        g__Arcobac…
+## 2 d__Bacteria;p__Campilobacterota;c… X2280.04…         0 AD07        g__Arcobac…
+## 3 d__Bacteria;p__Campilobacterota;c… X2280.04…        79 B001        g__Arcobac…
+## 4 d__Bacteria;p__Campilobacterota;c… X2280.04…       108 B007        g__Arcobac…
+## 5 d__Bacteria;p__Campilobacterota;c… X2280.05…       769 B013        g__Arcobac…
+## 6 d__Bacteria;p__Campilobacterota;c… X2280.05…       167 B019        g__Arcobac…</code></pre>
 </div>
 
 

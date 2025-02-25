@@ -31,21 +31,21 @@ print(m)
 m_transposed<-t(m)
 print(m_transposed)
 #sum of elements in first row
-row1_sum<-sum(m_transposed[1,])
-print(row1_sum)
+#row1_sum<-sum(m_transposed[1,])
+#print(row1_sum)
 #sum of elements in last row 
-row4_sum<-sum(m_transposed[4,])
-print(row4_sum)
+#row4_sum<-sum(m_transposed[4,]) This indexxing needs to be vectorized
+#print(row4_sum)
 
 #exploring eigen
-eigen_m_transposed<-eigen(m_transposed, symmetric=FALSE,only.values=FALSE)
-print(eigen_m_transposed)
-print(eigen_m_transposed$values)
-print(eigen_m_transposed$vector)
+#eigen_m_transposed<-eigen(m_transposed, symmetric=FALSE,only.values=FALSE)
+#print(eigen_m_transposed)
+#print(eigen_m_transposed$values)
+#print(eigen_m_transposed$vector)
 #these are all real numbers, some negative some positive 
 #all are less than 1
-typeof(eigen_m_transposed$values)
-typeof(eigen_m_transposed$vectors)
+#typeof(eigen_m_transposed$values)
+#typeof(eigen_m_transposed$vectors)
 
 
 ```
