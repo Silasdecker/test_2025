@@ -145,3 +145,10 @@ data_long <- data_long %>%
 
 
 ```
+```{r}
+head(data_long)
+
+
+
+
+```
