@@ -1,0 +1,147 @@
+---
+title: "Homework_6"
+author: "Silas Decker"
+date: "2025-02-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+library(readr)
+data<- read.csv(file='otu_table_no_chim.csv',header=TRUE,sep=',')
+str(data)
+head(data)
+```
+```{r}
+#defining columns
+column_names<-colnames(data)
+print(column_names)
+```
+```{r}
+#finding column sums 
+colSums(data[,-1], na.rm=TRUE, dims=1)
+#finding column means
+colMeans(data[,-1], na.rm=TRUE, dims=1)
+```
+```{r}
+#converting to long data 
+library(tidyverse)
+library(dplyr)
+library(stringr)
+data_long <- data %>%
+  pivot_longer(cols = starts_with("X2280"),  # This will select all columns that start with "X2280"
+               names_to = "Sample_ID",      # The new column for sample identifiers
+               values_to = "Abundance")     # The new column for abundance values
+data_long$Sample_ID <- as.character(data_long$Sample_ID)
+data_long <- data_long %>%
+   mutate(Sample_Type = sapply(strsplit(Sample_ID, "\\."), function(x) x[3]))
+head(data_long)
+```
+
+```{r}
+#Attempting ANOVA analysis 
+library(ggplot2)
+
+anova_result<- aov(Abundance~Sample_Type, data=data_long)
+summary(anova_result)
+
+```
+# Anova Preliminary Takeaways
+The first ANOVA analysis was done by first converting my wide data to a long data type. This allowed to run an ANOVA analysis between sample type and abundance. This yielded a low P value of 0.00256 (<0.05) which infers that there is low probability of random differences in abundance due to sample type. In other words, the sample type appears to have an effect on the abundance. 
+```{r}
+
+# Create a boxplot of Abundance by Sample_Type
+ggplot(data_long, aes(x = Sample_Type, y = Abundance, group=Sample_Type)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(title = "Abundance by Sample Type",
+       x = "Sample Type",
+       y = "Abundance") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels if needed
+
+```
+
+```{r}
+#Trying to filter out 0s to make plot more attractive 
+data_long_filtered <- data_long %>% filter(Abundance > 0)
+
+# Boxplot without 0s
+ggplot(data_long_filtered, aes(x = Sample_Type, y = Abundance)) +
+  geom_boxplot() +
+  scale_y_log10()+
+  theme_minimal() +
+  labs(title = "Abundance by Sample Type (Excluding Zeros)",
+       x = "Sample Type",
+       y = "Log(Abundance)") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels if needed
+
+```
+This graph seems somewhat intriguing. I removed 0s since there are so many that it skewed the boxes towards 0, and I also put the y-axis in log form to make the boxes larger, and more dinstinct. 
+
+What is neat, is that there exist a pattern for the 'ADxx' samples that shows a fluctuating abundance. A potential reason for this may be due to the bioreactor's feed stock. The input is Cabot cheese waste that contains a sizeable amount of bleach and cleaning products. I need to check into the metadata, but it appears for sample type 'ADxx' there are times when the abundance drops down, it would be neat if this aligns with replenishing the reactor with bleach.
+
+
+```{r}
+#Attempting for loops for iterating over smaller sample size 
+
+for (i in seq(from=1,to=200, by=10)){
+  subset_data <- data_long[10*i:(10*i+10), ]
+  anova_model <- aov(Abundance ~ Sample_Type, data = subset_data)
+print(summary(anova_model))   
+
+}
+for (i in seq(from=1,to=200, by=20)){
+  subset_data <- data_long[10*i:(10*i+10), ]
+  anova_model <- aov(Abundance ~ Sample_Type, data = subset_data)
+print(summary(anova_model))   
+
+}
+for (i in seq(from=1,to=200, by=50)){
+  subset_data <- data_long[10*i:(10*i+10), ]
+  anova_model <- aov(Abundance ~ Sample_Type, data = subset_data)
+print(summary(anova_model))   
+
+}
+
+for (i in seq(from=1,to=500, by=50)){
+  subset_data <- data_long[10*i:(10*i+10), ]
+  anova_model <- aov(Abundance ~ Sample_Type, data = subset_data)
+print(summary(anova_model))   
+
+}
+for (i in seq(from=1,to=500, by=100)){
+  subset_data <- data_long[10*i:(10*i+10), ]
+  anova_model <- aov(Abundance ~ Sample_Type, data = subset_data)
+print(summary(anova_model))   
+
+}
+for (i in seq(from=1,to=500, by=500)){
+  subset_data <- data_long[10*i:500, ]
+  anova_model <- aov(Abundance ~ Sample_Type, data = subset_data)
+print(summary(anova_model))   
+
+}
+```
+
+##Effect of Sample Size on Statistical Significance
+
+As seen in the outputs for my for loops above, running the anova analysis on smaller samples greatly impacts the results. For instance, when running the anova on the entire sample set, the P-value was 0.00256, significantly less than 0.05. This infers that the sample type does indeed have an impact on the abundances of species. In my for loops I shrunk the size/rows being interrogated. To start I tried the anova with 10 samples at a time, and it yielded p values greater than 0.05 for each iteration. Taking this at face values makes it seem that the sample type does not significantly effect the abundance. I tried several different subsets to run the anova on, and as the size got larger the p value did reduce, but it did not get as low as it did for the entire data set. This leads me to believe that it is critical to factor in as large of a sample as possible to get significant results. 
+
+
+```{r}
+#attempting to shorten the taxas to a plotable length 
+library(dplyr)
+library(stringr)
+data_long <- data_long %>%
+  mutate(Taxa_Abbrev = str_extract(X.OTU.ID, "(?<=;)[^;]+$"))
+
+#This seems to work okay, but is not good for those that dont have this level of specification 
+
+
+
+
+```
