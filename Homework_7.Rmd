@@ -1,0 +1,105 @@
+---
+title: "HW_7_dplyer"
+author: "Silas Decker"
+date: "2025-02-26"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Problem 1 
+
+```{r}
+library(tidyverse)
+
+data(iris)
+
+glimpse(iris)
+str(iris)
+```
+1) There are 150 observations of 5 variables in the iris data set. 
+
+
+
+#Problem 2 
+
+```{r}
+iris1<-filter(iris, Species=='virginica'| Species=='versicolor' , Sepal.Length>6 ,  Sepal.Width>2.5)
+str(iris1)
+
+glimpse(iris1)
+
+```
+2) Iris1 contains 56 observations of 5 variables. 
+
+#Problem 3 
+
+```{r}
+iris2<-select(iris1,Species, Sepal.Length, Sepal.Width)
+str(iris2)
+
+```
+3) Iris2 contains 67 observations of 3 variables. 
+
+#Problem 4 
+
+```{r}
+iris3<-arrange(iris2, by=desc(Sepal.Length))
+str(iris3)
+head(iris3)
+
+```
+
+#Problem 5 
+
+```{r}
+iris4<-mutate(iris3, sepalArea=Sepal.Width*Sepal.Length)
+str(iris4)
+```
+5) Iris4 contains 56 observations of 4 variables 
+
+
+#Problem 6 
+
+```{r}
+iris5<-summarize(iris4, meanSepalLength=mean(Sepal.Length), meanSepalWidth=mean(Sepal.Width),sampleSize=n())
+print(iris5)
+str(iris5)
+
+```
+#Problem 7 
+
+```{r}
+
+iris6<- iris4%>%
+  group_by(Species) %>% 
+  summarize(MeanLength=mean(Sepal.Length), MeanWidth=mean(Sepal.Width), count=n() )
+print(iris6)
+```
+
+#Problem 8
+
+```{r}
+IrisBigPipe<-iris %>% 
+  filter(Species=='virginica'| Species=='versicolor' , Sepal.Length>6 ,  Sepal.Width>2.5) %>% 
+  select(Species, Sepal.Length, Sepal.Width) %>% 
+  arrange(iris2, by=desc(Sepal.Length)) %>% 
+  mutate(iris3, sepalArea=Sepal.Width*Sepal.Length) %>% 
+  group_by(Species) %>% 
+  summarize(MeanLength=mean(Sepal.Length), MeanWidth=mean(Sepal.Width), count=n() )
+
+str(IrisBigPipe)
+
+```
+
+#Problem 9 
+
+```{r}
+Long_Iris<-iris %>% 
+  pivot_longer(cols=Sepal.Length:Petal.Width, names_to='Measure', values_to='value',values_drop_na = TRUE)
+str(Long_Iris)
+
+
+```

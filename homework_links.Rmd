@@ -17,6 +17,7 @@ Week 5 Homework  [HW5 Link](docs/Homework_5.html)
 
 Week 6 Homework [HW6 Link](Homework_6.html)
 
+Week 7 Homework [HW7 Link](Homework_7.html)
 
 
 #![my picture](D:\Documents\UVM Classes\computational_bio\homework_3_1_29)
