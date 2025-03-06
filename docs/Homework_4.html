@@ -272,7 +272,8 @@ $(document).ready(function () {
 </div>
 
 
-<p>#Problem 1</p>
+<div id="problem-1" class="section level1">
+<h1>Problem 1</h1>
 <pre class="r"><code>x&lt;- 1.1
 a&lt;-2.2
 b&lt;-3.3
@@ -282,47 +283,35 @@ b&lt;-3.3
 z&lt;- x^(a^b)
 print(z)</code></pre>
 <pre><code>## [1] 3.61714</code></pre>
-<pre class="r"><code>#output: 
-#[1] 3.61714
-
-#part b 
+<pre class="r"><code>#part b 
 
 z&lt;-(x^a)^b
 print(z)</code></pre>
 <pre><code>## [1] 1.997611</code></pre>
-<pre class="r"><code>#output: 
-#[1] 1.997611
-
-#part c
+<pre class="r"><code>#part c
 
 z&lt;-(3*x^3)+(2*x^2)+1
 print(z)</code></pre>
 <pre><code>## [1] 7.413</code></pre>
-<pre class="r"><code>#output
-#[1] 7.413</code></pre>
-<p>#Problem 2</p>
+</div>
+<div id="problem-2" class="section level1">
+<h1>Problem 2</h1>
 <pre class="r"><code>#first vector
 my_vec&lt;-c(seq(1,8),seq(7,1))    
 print(my_vec)</code></pre>
 <pre><code>##  [1] 1 2 3 4 5 6 7 8 7 6 5 4 3 2 1</code></pre>
-<pre class="r"><code>#output: 
-#[1] 1 2 3 4 5 6 7 8 7 6 5 4 3 2 1
- 
-#second vector
+<pre class="r"><code>#second vector
 my_vec2&lt;-c(1:5)
 rep(x=my_vec2,times=my_vec2)</code></pre>
 <pre><code>##  [1] 1 2 2 3 3 3 4 4 4 4 5 5 5 5 5</code></pre>
-<pre class="r"><code>#output: 
-#[1] 1 2 2 3 3 3 4 4 4 4 5 5 5 5 5
-
-#third vector 
+<pre class="r"><code>#third vector 
 my_vec3&lt;-c(5:1)
 my_vec&lt;-c(1:5)
 rep(x=my_vec3, times=my_vec)</code></pre>
 <pre><code>##  [1] 5 4 4 3 3 3 2 2 2 2 1 1 1 1 1</code></pre>
-<pre class="r"><code>#output: 
-#[1] 5 4 4 3 3 3 2 2 2 2 1 1 1 1 1</code></pre>
-<p>#Problem 3</p>
+</div>
+<div id="problem-3" class="section level1">
+<h1>Problem 3</h1>
 <pre class="r"><code>z&lt;-runif(2)
 print(z)</code></pre>
 <pre><code>## [1] 0.7808661 0.5826711</code></pre>
@@ -341,31 +330,9 @@ print(theta)</code></pre>
 <pre class="r"><code>polar&lt;-c(r,theta)
 print(polar)</code></pre>
 <pre><code>## [1] 0.9742984 0.6410555</code></pre>
-<pre class="r"><code>#ouput: 
-#&gt; z&lt;-runif(2)
-#&gt; print(z)
-#[1] 0.5475164 0.3287697
-#&gt; x&lt;-z[1]
-#&gt; y&lt;-z[2]
-#&gt; print(x)
-#[1] 0.5475164
-#&gt; print(y)
-#[1] 0.3287697
-#&gt; r&lt;-sqrt(x^2+y^2)
-#&gt; print(r)
-#[1] 0.6386421
-#&gt; asin(y/r)
-#[1] 0.5407684
-#&gt; r&lt;-sqrt(x^2+y^2)
-#&gt; print(r)
-#[1] 0.6386421
-#&gt; theta&lt;-asin(y/r)
-#&gt; print(theta)
-#[1] 0.5407684
-#&gt; polar&lt;-c(r,theta)
-#&gt; print(polar)
-#[1] 0.6386421 0.5407684</code></pre>
-<p>#Problem 4</p>
+</div>
+<div id="problem-4" class="section level1">
+<h1>Problem 4</h1>
 <pre class="r"><code>queue &lt;- c(&quot;sheep&quot;, &quot;fox&quot;, &quot;owl&quot;, &quot;ant&quot;)
 print(queue)</code></pre>
 <pre><code>## [1] &quot;sheep&quot; &quot;fox&quot;   &quot;owl&quot;   &quot;ant&quot;</code></pre>
@@ -398,21 +365,14 @@ print(queue)</code></pre>
 <pre class="r"><code>#g
 which(queue==&#39;aphid&#39;)</code></pre>
 <pre><code>## [1] 3</code></pre>
-<p>#output</p>
-<blockquote>
-<p>queue &lt;- c(“sheep”, “fox”, “owl”, “ant”) print(queue) [1] “sheep”
-“fox” “owl” “ant”<br />
-#a queue&lt;-c(queue,‘serpent’) print(queue) [1] “sheep” “fox” “owl”
-“ant” “serpent” #b queue&lt;-queue[-c(1)] print(queue) [1] “fox” “owl”
-“ant” “serpent” #c queue&lt;-c(‘donkey’, queue) print(queue) [1]
-“donkey” “fox” “owl” “ant” “serpent” #d queue&lt;-queue[-c(5)]
-print(queue) [1] “donkey” “fox” “owl” “ant”<br />
-#e queue&lt;-queue[-c(3)] print(queue) [1] “donkey” “fox” “ant”<br />
-#f which(queue==‘ant’) [1] 3 queue&lt;-c(queue[1:2], ‘aphid’,queue[3])
-print(queue) [1] “donkey” “fox” “aphid” “ant”<br />
-#g which(queue==‘aphid’) [1] 3</p>
-</blockquote>
-<p>#Problem 5</p>
+</div>
+<div id="problem-5" class="section level1">
+<h1>Problem 5</h1>
+<pre class="r"><code>z&lt;-seq(1:100)
+z[z %% 2 !=0 &amp; z %% 3 !=0 &amp; z %% 7 != 0]</code></pre>
+<pre><code>##  [1]  1  5 11 13 17 19 23 25 29 31 37 41 43 47 53 55 59 61 65 67 71 73 79 83 85
+## [26] 89 95 97</code></pre>
+</div>
 
 
 
