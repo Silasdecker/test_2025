@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-## **Problem 1**
+##  **Problem 1**
 
 ```{r}
 #create vector of consecutive int 1:ndims^2
@@ -22,30 +22,31 @@ print(n_dims2)
 n_dims_vec<-seq(1:n_dims2)
 print(n_dims_vec)
 #sampling 
-sample(x=n_dims_vec)
+ran_vec<-sample(x=n_dims_vec)
 #creating square matrix
-m<- matrix(data=n_dims_vec,nrow=sqrt(n_dims2))
+m<- matrix(data=ran_vec,nrow=sqrt(n_dims2))
 print(m)
 
 #transposing the matrix via t() function 
 m_transposed<-t(m)
 print(m_transposed)
 #sum of elements in first row
-#row1_sum<-sum(m_transposed[1,])
-#print(row1_sum)
+row1_sum<-sum(m_transposed[1,])
+print(row1_sum)
 #sum of elements in last row 
-#row4_sum<-sum(m_transposed[4,]) This indexxing needs to be vectorized
-#print(row4_sum)
+row4_sum<-sum(m_transposed[4,]) # This indexing needs to be vectorized
+print(row4_sum)
 
 #exploring eigen
-#eigen_m_transposed<-eigen(m_transposed, symmetric=FALSE,only.values=FALSE)
-#print(eigen_m_transposed)
-#print(eigen_m_transposed$values)
-#print(eigen_m_transposed$vector)
-#these are all real numbers, some negative some positive 
-#all are less than 1
-#typeof(eigen_m_transposed$values)
-#typeof(eigen_m_transposed$vectors)
+eigen_m_transposed<-eigen(m_transposed, symmetric=FALSE,only.values=FALSE)
+print(eigen_m_transposed)
+print(eigen_m_transposed$values)
+print(eigen_m_transposed$vector)
+
+#These are generating complex numbers, with negative and positive real parts as well as the imaginary part. I found that depending on the value of the samples sequence that began this matrix, we may not generate complex numbers. Rather, they may end up as real numbers only. 
+
+typeof(eigen_m_transposed$values)
+typeof(eigen_m_transposed$vectors)
 
 
 ```

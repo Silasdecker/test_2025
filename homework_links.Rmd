@@ -13,7 +13,7 @@ Week 3 Homework [HW3 Link](Homework_3.html)
 
 Week 4 Homework [HW4 Link](Homework_4.html)
 
-Week 5 Homework  [HW5 Link](docs/Homework_5.html)
+Week 5 Homework  [HW5 Link](Homework_5.html)
 
 Week 6 Homework [HW6 Link](Homework_6.html)
 
