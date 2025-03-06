@@ -127,7 +127,7 @@ print(summary(anova_model))
 }
 ```
 
-##Effect of Sample Size on Statistical Significance
+## Effect of Sample Size on Statistical Significance
 
 As seen in the outputs for my for loops above, running the anova analysis on smaller samples greatly impacts the results. For instance, when running the anova on the entire sample set, the P-value was 0.00256, significantly less than 0.05. This infers that the sample type does indeed have an impact on the abundances of species. In my for loops I shrunk the size/rows being interrogated. To start I tried the anova with 10 samples at a time, and it yielded p values greater than 0.05 for each iteration. Taking this at face values makes it seem that the sample type does not significantly effect the abundance. I tried several different subsets to run the anova on, and as the size got larger the p value did reduce, but it did not get as low as it did for the entire data set. This leads me to believe that it is critical to factor in as large of a sample as possible to get significant results. 
 
