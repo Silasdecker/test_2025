@@ -1,0 +1,217 @@
+---
+title: "Homework 8"
+author: "Silas Decker"
+date: "2025-03-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# **Read in Fake Data Vector**
+```{r}
+library(ggplot2)
+library(MASS)
+
+# quick and dirty, a truncated normal distribution to work on the solution set
+
+z <- rnorm(n=3000,mean=0.2)
+z <- data.frame(1:3000,z)
+names(z) <- list("ID","myVar")
+z <- z[z$myVar>0,]
+str(z)
+summary(z$myVar)
+```
+
+# **Plot Histogram of Data**
+
+```{r}
+
+p1 <- ggplot(data=z, aes(x=myVar, y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",size=0.2) 
+print(p1)
+
+```
+
+# **Empirical Density Curve**
+```{r}
+p1 <-  p1 +  geom_density(linetype="dotted",size=0.75)
+print(p1)
+
+```
+
+# **Maximum Likelihood Parameters for Normal** 
+```{r}
+normPars <- fitdistr(z$myVar,"normal")
+print(normPars)
+str(normPars)
+normPars$estimate["mean"] # note structure of getting a named attribute
+
+```
+# **Plot Normal PDF** 
+```{r}
+meanML <- normPars$estimate["mean"]
+sdML <- normPars$estimate["sd"]
+
+xval <- seq(0,max(z$myVar),len=length(z$myVar))
+
+ stat <- stat_function(aes(x = xval, y = ..y..), fun = dnorm, colour="red", n = length(z$myVar), args = list(mean = meanML, sd = sdML))
+ p1 + stat
+```
+# **Exponential PDF** 
+```{r}
+expoPars <- fitdistr(z$myVar,"exponential")
+rateML <- expoPars$estimate["rate"]
+
+stat2 <- stat_function(aes(x = xval, y = ..y..), fun = dexp, colour="blue", n = length(z$myVar), args = list(rate=rateML))
+ p1 + stat + stat2
+```
+# **Uniform PDF**
+
+```{r}
+stat3 <- stat_function(aes(x = xval, y = ..y..), fun = dunif, colour="darkgreen", n = length(z$myVar), args = list(min=min(z$myVar), max=max(z$myVar)))
+ p1 + stat + stat2 + stat3
+
+```
+# **Gamma PDF** 
+```{r}
+gammaPars <- fitdistr(z$myVar,"gamma")
+shapeML <- gammaPars$estimate["shape"]
+rateML <- gammaPars$estimate["rate"]
+
+stat4 <- stat_function(aes(x = xval, y = ..y..), fun = dgamma, colour="brown", n = length(z$myVar), args = list(shape=shapeML, rate=rateML))
+ p1 + stat + stat2 + stat3 + stat4
+```
+# **Beta PDF**
+
+```{r}
+pSpecial <- ggplot(data=z, aes(x=myVar/(max(myVar + 0.1)), y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",size=0.2) + 
+  xlim(c(0,1)) +
+  geom_density(size=0.75,linetype="dotted")
+
+betaPars <- fitdistr(x=z$myVar/max(z$myVar + 0.1),start=list(shape1=1,shape2=2),"beta")
+shape1ML <- betaPars$estimate["shape1"]
+shape2ML <- betaPars$estimate["shape2"]
+
+statSpecial <- stat_function(aes(x = xval, y = ..y..), fun = dbeta, colour="orchid", n = length(z$myVar), args = list(shape1=shape1ML,shape2=shape2ML))
+pSpecial + statSpecial
+```
+
+# **Real Data Time**
+```{r}
+library(tidyverse)
+pfas<-read.csv('pfas.csv')
+head(pfas)
+pfas_num<-pfas %>% 
+  select(gm_chemical_name, gm_result)
+pfas_num_clean<-pfas_num[complete.cases(pfas_num),]
+
+#add log column for the results 
+pfas_num_clean$log_gm_result <- log10(pfas_num_clean$gm_result)
+
+pfas_num_clean <- pfas_num_clean[pfas_num_clean$log_gm_result > 0 & pfas_num_clean$log_gm_result < 1, ]
+pfas_num_clean <- pfas_num_clean[is.finite(pfas_num_clean$log_gm_result), ]
+
+# Clean data 
+#sum(is.na(pfas_num_clean$log_gm_result))
+
+
+```
+
+# **Plot Histogram of Data**
+
+```{r}
+# using log scale to get better view of data 
+p1 <- ggplot(data=pfas_num_clean, aes(x=log_gm_result, y=..density..)) +
+  geom_histogram(binwidth=.10,color="grey60",fill="cornsilk",size=.2)
+  #scale_x_log10()
+print(p1)
+
+#str(z)
+#str(pfas_num_clean)
+#str(pfas_num_clean$gm_result)
+#summary(pfas_num_clean$gm_result)
+```
+
+# **Empirical Density Curve**
+```{r}
+p1 <-  p1 +  geom_density(linetype="dotted",size=0.75)
+print(p1)
+
+```
+
+# **Maximum Likelihood Parameters for Normal** 
+```{r}
+library(MASS)
+pfas_num_clean <- pfas_num_clean[is.finite(pfas_num_clean$log_gm_result), ]
+normPars <- fitdistr(pfas_num_clean$log_gm_result,"normal")
+print(normPars)
+str(normPars)
+normPars$estimate["mean"] # note structure of getting a named attribute
+
+```
+# **Plot Normal PDF** 
+```{r}
+
+meanML <- normPars$estimate["mean"]
+sdML <- normPars$estimate["sd"]
+
+xval <- seq(0,max(pfas_num_clean$log_gm_result),len=length(pfas_num_clean$log_gm_result))
+
+ stat <- stat_function(aes(x = xval, y = ..y..), fun = dnorm, colour="red", n = length(pfas_num_clean$log_gm_result), args = list(mean = meanML, sd = sdML))
+ p1 + stat
+
+
+
+```
+# **Exponential PDF** 
+```{r}
+expoPars <- fitdistr(pfas_num_clean$log_gm_result,"exponential")
+rateML <- expoPars$estimate["rate"]
+
+stat2 <- stat_function(aes(x = xval, y = ..y..), fun = dexp, colour="blue", n = length(pfas_num_clean$log_gm_result), args = list(rate=rateML))
+ p1 + stat + stat2
+```
+# **Uniform PDF**
+
+```{r}
+stat3 <- stat_function(aes(x = xval, y = ..y..), fun = dunif, colour="darkgreen", n = length(pfas_num_clean$log_gm_result), args = list(min=min(pfas_num_clean$log_gm_result), max=max(pfas_num_clean$log_gm_result)))
+ p1 + stat + stat2 + stat3
+
+```
+# **Gamma PDF** 
+```{r}
+gammaPars <- fitdistr(pfas_num_clean$log_gm_result,"gamma")
+shapeML <- gammaPars$estimate["shape"]
+rateML <- gammaPars$estimate["rate"]
+
+stat4 <- stat_function(aes(x = xval, y = ..y..), fun = dgamma, colour="brown", n = length(pfas_num_clean$log_gm_result), args = list(shape=shapeML, rate=rateML))
+ p1 + stat + stat2 + stat3 + stat4
+```
+# **Beta PDF**
+
+```{r}
+pSpecial <- ggplot(data=pfas_num_clean, aes(x=log_gm_result/(max(log_gm_result + 0.1)), y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",size=0.2) + 
+  xlim(c(0,1)) +
+  geom_density(size=0.75,linetype="dotted")
+
+betaPars <- fitdistr(x=pfas_num_clean$log_gm_result/max(z$myVar + 0.1),start=list(shape1=1,shape2=2),"beta")
+shape1ML <- betaPars$estimate["shape1"]
+shape2ML <- betaPars$estimate["shape2"]
+
+statSpecial <- stat_function(aes(x = xval, y = ..y..), fun = dbeta, colour="orchid", n = length(pfas_num_clean$log_gm_result), args = list(shape1=shape1ML,shape2=shape2ML))
+pSpecial + statSpecial
+```
+
+
+## Write up/discussion 
+
+Upon completing the probability functions, my data is clearly a little whack. The original data had a massive range of values from 0 to hundreds of thousands. In order to improve the distribution I took the log value of the values of pfas and then truncated it between 0 and 100. This provided a better histogram, as the raw data was just one bar, but it still was not a pretty shape. 
+
+It appears that the best fit is the Normal PDF, in that it encompasses the shape of the data better than the other functions. However, I still believe that these functions did not do a good job overall with fitting the data. Each curve seems to be a somewhat different trajectory than the data's histogram follows. I am not positive as to what contributed to this, though I reckon it still has to do with the high degree of variance seen in my data set. 
+
+
+
