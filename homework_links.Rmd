@@ -21,6 +21,10 @@ Week 7 Homework [HW7 Link](Homework_7.html)
 
 Week 8 Homework [HW8 Link](Homework_8.html)
 
+Week 9 Homework [HW9 Link](Homework_9.html)
+
+Week 10 Homework [HW10 Link](Homework_10.html)
+
 
 
 #![my picture](D:\Documents\UVM Classes\computational_bio\homework_3_1_29)

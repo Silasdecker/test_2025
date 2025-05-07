@@ -1,0 +1,110 @@
+---
+title: "Homework_10"
+author: "Silas Decker"
+date: "2025-04-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r}
+
+library(tidyverse)
+library(ggbeeswarm)
+library(ggridges)
+library(ggpie)
+library(waffle)
+library(tidytuesdayR)
+library(ggplot2)
+library(GGally)
+library(ggpie)
+library(ggmosaic)
+library(scatterpie)
+library(DescTools)
+library(treemap)
+library(patchwork)
+library(ggthemes)
+library(dplyr)
+
+#tuesdata <- tidytuesdayR::tt_load('2025-01-28')
+#tuesdata_2<- tidytuesdayR::tt_load('2025-03-18')
+
+
+```
+
+```{r}
+tuesdata <- tidytuesdayR::tt_load('2025-01-21')
+exped_tidy<-as.data.frame(tuesdata["exped_tidy"])
+
+exped_tidy<- exped_tidy %>%
+  rename(
+    Summit_time=exped_tidy.SMTTIME,
+    Total_days=exped_tidy.TOTDAYS,
+    Number_members=exped_tidy.TOTMEMBERS,
+    Deaths=exped_tidy.MDEATHS,
+    Number_hired=exped_tidy.SMTHIRED,
+    Number_accidents=exped_tidy.ACCIDENTS,
+    Season=exped_tidy.SEASON_FACTOR
+    
+  )
+
+```
+
+```{r}
+# Beeswarm plot of Group Size of Mountaineers 
+Bees<-ggplot(data=exped_tidy)+
+  aes(x=Number_members, y='', color='deeppink2')+
+  labs(title='Distribution of Summiting Group Size',x='Number of Members',y='Count')+
+  ggbeeswarm::geom_beeswarm(method='center',size=2)
+Bees
+
+
+
+```
+ 
+```{r}
+#Ridgeline Plot of Season vs Expedition Size  
+Honda<-ggplot(data=exped_tidy)+
+  aes(x=Number_members,y=Season, fill=Season)+
+  ggridges::geom_density_ridges()+
+  ggridges::theme_ridges()+
+  labs(title='Effect of Season on Size of Expedition Group', x='Number of Members',y='Season')+
+  theme( axis.title.x = element_text(hjust = 0.5),  
+    axis.title.y = element_text(hjust = 0.5))
+
+Honda
+
+
+str(exped_tidy$exped_tidy.SEASON_FACTOR)
+#exped_tidy$exped_tidy.SEASON_FACTOR<-as.factor(exped_tidy$exped_tidy.SEASON_FACTOR)
+```
+
+```{r}
+# 2D Density Plot of Days to Summit and Group Size 
+
+ggplot(filter(exped_tidy,Total_days>0), aes(x=Number_members, y=Total_days) ) +
+  geom_bin2d(bins = 25) +
+  scale_fill_continuous(type = "viridis") +
+  theme_bw()+
+  labs(title='Heatmap of Group Size and Number of Days')+
+  theme(title=element_text(hjust=0.5))
+
+
+
+```
+```{r}
+#Pie Chart of Season and Group Size 
+library(palette)
+Pecan<-ggpie::ggpie(data=exped_tidy, group_key='Season',count_type='full', label_info='ratio', label_type='circle')+
+  scale_fill_brewer(palette = 'Set2')+
+  labs(title='Popularity of Season for Expeditions')+
+  theme(title = element_text(hjust=.65))
+
+Pecan 
+
+```
+

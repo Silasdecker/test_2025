@@ -1,0 +1,131 @@
+---
+title: "Homework_9"
+author: "Silas Decker"
+date: "2025-04-02"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+## Homework 9
+
+
+### Listing Count Data Files 
+```{r}
+main_folder<-'D:/Documents/UVM Classes/computational_bio/test_2025/OriginalData/NEON_count-landbird/'
+print(main_folder)
+
+subfolders <- list.dirs(main_folder, recursive = F)
+print(subfolders)
+
+x <- c()
+
+for (i in 1:10) {
+  #setwd(subfolders[i])
+  files<-list.files(path = subfolders[i], pattern = "countdata.*\\.csv$", full.names = TRUE)
+  x <- c(x, files)
+  return(x)
+}
+
+print(x)
+
+
+```
+```{r}
+library(upscaler)
+library(dplyr)
+library(stringr)
+library(ggplot2)
+
+source_batch(folder='Functions/')
+```
+
+
+
+
+### Reading in Data 
+```{r}
+# Read csv for each path in x
+# Read all CSVs into a list of data frames
+data_list <- lapply(x, read.csv)
+
+library(dplyr)
+
+combined_data <- do.call(rbind, lapply(x, function(path) {
+  df <- read.csv(path)
+  df %>%
+    select(startDate, vernacularName, scientificName, taxonID)
+}))
+
+head(combined_data)
+```
+
+
+### Cleaning Data 
+```{r}
+#Cleaning Data
+
+clean_data<-clean_data()
+
+head(clean_data)
+```
+
+### Extracting Year 
+```{r}
+#Extracting Year 
+
+extract_year()
+```
+
+### Calculating Abundance 
+```{r}
+#Function to calculate abundance 
+
+abundance<-calculate_abundance()
+print(abundance)
+```
+
+### Calculating Richness 
+```{r}
+#Function to calculate species richness 
+richness<-calculate_richness()
+print(richness)
+```
+
+### Linear Regression 
+```{r}
+#Simple Linear Regression 
+abundance_richness_df<-merge(richness,abundance,by='startDate')
+colnames(abundance_richness_df) <- c("year", "richness",'abundance')
+run_regression()
+```
+
+### Plotting Abundance and Richness 
+```{r}
+#generate abundance and richness plots  
+
+abundance_plot<-ggplot(data = abundance_richness_df, aes(x = factor(year), y = abundance)) +
+    geom_col(fill = "steelblue") +
+    labs(title = "Total Abundance per Year",
+         x = "Year",
+         y = "Abundance") +
+    theme_minimal()
+abundance_plot
+
+richness_plot<-ggplot(data = abundance_richness_df, aes(x = factor(year), y = richness)) +
+    geom_col(fill = "steelblue") +
+    labs(title = "Total Richness per Year",
+         x = "Year",
+         y = "Richness") +
+    theme_minimal()
+richness_plot
+```
+
+
+
+
+
