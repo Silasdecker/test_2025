@@ -274,18 +274,8 @@ $(document).ready(function () {
 
 <div id="r-markdown" class="section level2">
 <h2>R Markdown</h2>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching core tidyverse packages ────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.2     
-## ── Conflicts ──────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
-## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<pre class="r"><code>library(ggbeeswarm)</code></pre>
+<pre class="r"><code>library(tidyverse)
+library(ggbeeswarm)</code></pre>
 <pre><code>## Warning: package &#39;ggbeeswarm&#39; was built under R version 4.4.3</code></pre>
 <pre class="r"><code>library(ggridges)</code></pre>
 <pre><code>## Warning: package &#39;ggridges&#39; was built under R version 4.4.3</code></pre>
@@ -305,9 +295,8 @@ library(GGally)</code></pre>
 library(ggmosaic)</code></pre>
 <pre><code>## Warning: package &#39;ggmosaic&#39; was built under R version 4.4.3</code></pre>
 <pre><code>## 
-## Attaching package: &#39;ggmosaic&#39;
-## 
-## The following object is masked from &#39;package:GGally&#39;:
+## Attaching package: &#39;ggmosaic&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:GGally&#39;:
 ## 
 ##     happy</code></pre>
 <pre class="r"><code>library(scatterpie)</code></pre>
@@ -317,8 +306,13 @@ library(ggmosaic)</code></pre>
 <pre><code>## Warning: package &#39;DescTools&#39; was built under R version 4.4.3</code></pre>
 <pre class="r"><code>library(treemap)</code></pre>
 <pre><code>## Warning: package &#39;treemap&#39; was built under R version 4.4.3</code></pre>
-<pre class="r"><code>library(patchwork)
-library(ggthemes)</code></pre>
+<pre class="r"><code>library(patchwork)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;patchwork&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:MASS&#39;:
+## 
+##     area</code></pre>
+<pre class="r"><code>library(ggthemes)</code></pre>
 <pre><code>## Warning: package &#39;ggthemes&#39; was built under R version 4.4.3</code></pre>
 <pre class="r"><code>library(dplyr)
 
@@ -329,7 +323,7 @@ library(ggthemes)</code></pre>
 ## --- There are 2 files available ---
 ## 
 ## 
-## ── Downloading files ─────────────────────────────────────────
+## ── Downloading files ──────────────────────────────────────────────────────────────────────────
 ## 
 ##   1 of 2: &quot;exped_tidy.csv&quot;
 ##   2 of 2: &quot;peaks_tidy.csv&quot;</code></pre>
@@ -352,10 +346,10 @@ Bees&lt;-ggplot(data=exped_tidy)+
   labs(title=&#39;Distribution of Summiting Group Size&#39;,x=&#39;Number of Members&#39;,y=&#39;Count&#39;)+
   ggbeeswarm::geom_beeswarm(method=&#39;center&#39;,size=2)
 Bees</code></pre>
-<pre><code>## Warning: In `position_beeswarm`, method `center` discretizes the data
-## axis (a.k.a the continuous or non-grouped axis).
-## This may result in changes to the position of the points
-## along that axis, proportional to the value of `cex`.
+<pre><code>## Warning: In `position_beeswarm`, method `center` discretizes the data axis (a.k.a the continuous or
+## non-grouped axis).
+## This may result in changes to the position of the points along that axis, proportional to the
+## value of `cex`.
 ## This warning is displayed once per session.</code></pre>
 <p><img src="Homework_10_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <pre class="r"><code>#Ridgeline Plot of Season vs Expedition Size  
@@ -398,8 +392,7 @@ library(palette)</code></pre>
   labs(title=&#39;Popularity of Season for Expeditions&#39;)+
   theme(title = element_text(hjust=.65))</code></pre>
 <pre><code>## Scale for fill is already present.
-## Adding another scale for fill, which will replace the
-## existing scale.</code></pre>
+## Adding another scale for fill, which will replace the existing scale.</code></pre>
 <pre class="r"><code>Pecan </code></pre>
 <p><img src="Homework_10_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
